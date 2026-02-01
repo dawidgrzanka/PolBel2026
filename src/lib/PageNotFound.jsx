@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+undefined
 
 export default function PageNotFound({}) {
     const location = useLocation();
