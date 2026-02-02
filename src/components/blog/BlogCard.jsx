@@ -34,11 +34,14 @@ export default function BlogCard({ post, featured = false }) {
           <div className="grid md:grid-cols-2">
             <div className="relative h-64 md:h-full min-h-[300px]">
               {post.cover_image ? (
-                <img
-                  src={post.cover_image}
+                <img 
+                  src={post.cover_image || post.featured_image || "/placeholder-image.jpg"} 
                   alt={post.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    console.error("Błąd ładowania obrazu:", post.cover_image);
+                    e.target.src = "https://placehold.co/600x400?text=Brak+Zdjecia"; // Obrazek zastępczy
+                  }}
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-[#d4a84b] to-[#e6007e]" />
@@ -82,11 +85,14 @@ export default function BlogCard({ post, featured = false }) {
       <Link to={createPageUrl(`BlogPost?slug=${post.slug}`)}>
         <div className="relative h-48 overflow-hidden">
           {post.cover_image ? (
-            <img
-              src={post.cover_image}
+            <img 
+              src={post.cover_image || post.featured_image || "/placeholder-image.jpg"} 
               alt={post.title}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                console.error("Błąd ładowania obrazu:", post.cover_image);
+                e.target.src = "https://placehold.co/600x400?text=Brak+Zdjecia"; // Obrazek zastępczy
+              }}
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300" />

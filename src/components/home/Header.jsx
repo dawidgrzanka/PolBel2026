@@ -8,8 +8,8 @@ export default function Header() {
   const navItems = [
     { name: 'USŁUGI', href: '#uslugi' },
     { name: 'WYNAJEM', href: '#wynajem' },
+    { name: 'SKLEP', href: '/Shop' },
     { name: 'BLOG', href: '/Blog' },
-    { name: 'POLBEL-PLUS', href: '#polbel-plus' },
   ];
 
   return (

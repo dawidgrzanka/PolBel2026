@@ -1,0 +1,80 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nazwa produktu/us\u0142ugi"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly slug"
+    },
+    "description": {
+      "type": "string",
+      "description": "Opis produktu"
+    },
+    "short_description": {
+      "type": "string",
+      "description": "Kr\u00f3tki opis (do listy)"
+    },
+    "price": {
+      "type": "number",
+      "description": "Cena w PLN"
+    },
+    "price_unit": {
+      "type": "string",
+      "enum": [
+        "szt",
+        "m2",
+        "m3",
+        "mb",
+        "godz",
+        "dzie\u0144",
+        "us\u0142uga"
+      ],
+      "default": "szt",
+      "description": "Jednostka ceny"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "materialy",
+        "wynajem",
+        "uslugi",
+        "transport"
+      ],
+      "description": "Kategoria produktu"
+    },
+    "image": {
+      "type": "string",
+      "description": "URL zdj\u0119cia"
+    },
+    "gallery": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Galeria zdj\u0119\u0107"
+    },
+    "in_stock": {
+      "type": "boolean",
+      "default": true,
+      "description": "Dost\u0119pno\u015b\u0107"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Wyr\u00f3\u017cniony produkt"
+    },
+    "specs": {
+      "type": "string",
+      "description": "Specyfikacja techniczna (JSON)"
+    }
+  },
+  "required": [
+    "name",
+    "price",
+    "category"
+  ]
+}

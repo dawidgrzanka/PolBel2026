@@ -3,21 +3,16 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoadingAuth, setIsLoadingAuth] = useState(false);
-  const [isLoadingPublicSettings, setIsLoadingPublicSettings] = useState(false);
+  const [user, setUser] = useState({ id: '1', name: 'Admin PolBel', role: 'admin' });
+const [isAuthenticated, setIsAuthenticated] = useState(true); // Zmień na true
+const [isLoadingAuth, setIsLoadingAuth] = useState(false); // Od razu false
+const [isLoadingPublicSettings, setIsLoadingPublicSettings] = useState(false); // Od razu false
   const [authError, setAuthError] = useState(null);
   const [appPublicSettings, setAppPublicSettings] = useState({ id: 'demo', public_settings: {} });
 
   // Symulacja ładowania (1s)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoadingAuth(false);
-      setIsLoadingPublicSettings(false);
-      setIsAuthenticated(false); // Statycznie: nikt nie jest zalogowany
-    }, 1000);
-    return () => clearTimeout(timer);
+    
   }, []);
 
   const logout = () => {

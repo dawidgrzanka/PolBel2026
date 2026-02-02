@@ -1,0 +1,32 @@
+{
+  "name": "BlogComment",
+  "type": "object",
+  "properties": {
+    "post_id": {
+      "type": "string",
+      "description": "ID artyku\u0142u"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Imi\u0119 autora komentarza"
+    },
+    "author_email": {
+      "type": "string",
+      "description": "Email autora"
+    },
+    "content": {
+      "type": "string",
+      "description": "Tre\u015b\u0107 komentarza"
+    },
+    "approved": {
+      "type": "boolean",
+      "default": false,
+      "description": "Czy komentarz jest zatwierdzony"
+    }
+  },
+  "required": [
+    "post_id",
+    "author_name",
+    "content"
+  ]
+}

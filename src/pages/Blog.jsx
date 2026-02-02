@@ -8,37 +8,8 @@ import BlogSidebar from '@/components/blog/BlogSidebar';
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronRight, Home, Search } from 'lucide-react';
 import { Input } from "@/components/ui/input";
-
-// MOCK DANE - zastępują Base44
-const MOCK_POSTS = [
-  {
-    id: 1,
-    title: "Budowa podjazdu - krok po kroku",
-    excerpt: "Kompletny poradnik jak zrobić trwały podjazd z kostki brukowej...",
-    category: "poradniki",
-    tags: ["kostka", "podjazd", "bruk"],
-    publish_date: "2026-01-15",
-    featured_image: "/api/placeholder/800/500"
-  },
-  {
-    id: 2,
-    title: "Najnowsze realizacje POLBEL 2026",
-    excerpt: "Prezentujemy nasze flagowe projekty z tego roku...",
-    category: "realizacje",
-    tags: ["projekty", "budownictwo"],
-    publish_date: "2026-01-20",
-    featured_image: "/api/placeholder/800/500"
-  },
-  {
-    id: 3,
-    title: "Nowe technologie w budownictwie",
-    excerpt: "Jak nowoczesne technologie zmieniają branżę...",
-    category: "technologie",
-    tags: ["technologia", "innowacje"],
-    publish_date: "2026-01-10",
-    featured_image: "/api/placeholder/800/500"
-  }
-];
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
 
 export default function Blog() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -46,15 +17,16 @@ export default function Blog() {
   const currentTag = urlParams.get('tag');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Symulacja ładowania
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
+  // 1. Pobieranie prawdziwych danych z Twojego backendu
+  const { data: allPosts = [], isLoading } = useQuery({
+    queryKey: ['public-posts'],
+    queryFn: () => base44.entities.BlogPost.list(),
+  });
 
+  // 2. Filtrowanie i logika wyświetlania
   const filteredPosts = useMemo(() => {
-    let result = MOCK_POSTS;
+    // Wyświetlamy tylko posty opublikowane
+    let result = allPosts.filter(p => p.published === true || p.published === 1);
     
     if (currentCategory) {
       result = result.filter(p => p.category === currentCategory);
@@ -73,7 +45,7 @@ export default function Blog() {
     }
     
     return result;
-  }, [currentCategory, currentTag, searchQuery]);
+  }, [allPosts, currentCategory, currentTag, searchQuery]);
 
   const featuredPost = filteredPosts[0];
   const regularPosts = filteredPosts.slice(1);
@@ -91,7 +63,7 @@ export default function Blog() {
       <Header />
       
       <main className="pt-20">
-        {/* Hero - bez zmian */}
+        {/* Hero Section */}
         <section className="bg-[#1a1a1a] py-16 md:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav className="flex items-center gap-2 text-sm text-white/60 mb-6" aria-label="Breadcrumb">
@@ -105,12 +77,6 @@ export default function Blog() {
                 <>
                   <ChevronRight className="w-4 h-4" />
                   <span className="text-[#d4a84b]">{categoryLabels[currentCategory]}</span>
-                </>
-              )}
-              {currentTag && (
-                <>
-                  <ChevronRight className="w-4 h-4" />
-                  <span className="text-[#d4a84b]">#{currentTag}</span>
                 </>
               )}
             </nav>
@@ -136,7 +102,7 @@ export default function Blog() {
           </div>
         </section>
 
-        {/* Content - bez zmian */}
+        {/* Blog Content Section */}
         <section className="py-12 md:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
@@ -164,6 +130,7 @@ export default function Blog() {
                   <>
                     {featuredPost && (
                       <div className="mb-8">
+                        {/* Przekazujemy prawdziwy post z Twojej bazy */}
                         <BlogCard post={featuredPost} featured />
                       </div>
                     )}
@@ -179,8 +146,9 @@ export default function Blog() {
               </div>
 
               <div className="lg:col-span-1">
+                {/* Przekazujemy wszystkie posty do sidebaru dla list popularnych/kategorii */}
                 <BlogSidebar 
-                  posts={MOCK_POSTS} 
+                  posts={allPosts} 
                   currentCategory={currentCategory}
                   currentTag={currentTag}
                 />

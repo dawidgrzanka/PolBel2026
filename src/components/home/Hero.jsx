@@ -91,4 +91,22 @@ export default function Hero() {
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-12 bg-[#d4a84b] hidden md:block" />
                 <div className="flex items-baseline justify-center md:justify-start gap-0.5 sm:gap-1">
                   <span className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#d4a84b]">
- 
+                    {stat.value}
+                  </span>
+                  {stat.suffix && (
+                    <span className="text-sm sm:text-lg md:text-xl text-[#d4a84b] font-medium">
+                      {stat.suffix}
+                    </span>
+                  )}
+                </div>
+                <p className="mt-1 sm:mt-2 text-[10px] sm:text-xs md:text-sm text-white/70 font-medium tracking-wider leading-tight">
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

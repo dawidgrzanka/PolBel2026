@@ -1,0 +1,42 @@
+{
+  "name": "SiteContent",
+  "type": "object",
+  "properties": {
+    "section_key": {
+      "type": "string",
+      "description": "Unikalny klucz sekcji (np. hero_title, hero_subtitle)"
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "html",
+        "image",
+        "json"
+      ],
+      "description": "Typ tre\u015bci"
+    },
+    "value": {
+      "type": "string",
+      "description": "Warto\u015b\u0107 tre\u015bci"
+    },
+    "label": {
+      "type": "string",
+      "description": "Czytelna nazwa dla admina"
+    },
+    "page": {
+      "type": "string",
+      "enum": [
+        "home",
+        "contact",
+        "about",
+        "global"
+      ],
+      "description": "Strona, do kt\u00f3rej nale\u017cy tre\u015b\u0107"
+    }
+  },
+  "required": [
+    "section_key",
+    "value"
+  ]
+}

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,12 +15,24 @@ export default function CommentSection({ postId, comments = [] }) {
     content: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const queryClient = useQueryClient();
 
-  // Placeholder - bez backendu
+  const createCommentMutation = useMutation({
+    mutationFn: (data) => base44.entities.BlogComment.create(data),
+    onSuccess: () => {
+      setSubmitted(true);
+      setFormData({ author_name: '', author_email: '', content: '' });
+      queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+    }
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000); // reset po 3s
+    createCommentMutation.mutate({
+      ...formData,
+      post_id: postId,
+      approved: false
+    });
   };
 
   const approvedComments = comments.filter(c => c.approved);
@@ -54,7 +68,7 @@ export default function CommentSection({ postId, comments = [] }) {
         <p className="text-gray-500 mb-8">Brak komentarzy. Bądź pierwszy!</p>
       )}
 
-      {/* Comment Form - placeholder */}
+      {/* Comment Form */}
       {submitted ? (
         <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
           <p className="text-green-800 font-medium">Dziękujemy za komentarz!</p>
@@ -102,18 +116,19 @@ export default function CommentSection({ postId, comments = [] }) {
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               placeholder="Napisz swój komentarz..."
-              className="bg-white"
+              className="bg-white resize-none"
             />
           </div>
-          <Button type="submit" className="w-full" disabled={submitted}>
+          <Button
+            type="submit"
+            disabled={createCommentMutation.isPending}
+            className="bg-[#e6007e] hover:bg-[#c70069]"
+          >
             <Send className="w-4 h-4 mr-2" />
-            Wyślij komentarz
+            {createCommentMutation.isPending ? 'Wysyłanie...' : 'Wyślij komentarz'}
           </Button>
-          <p className="text-xs text-gray-500 mt-2 text-center">
-            * Komentarze widoczne po moderacji
-          </p>
         </form>
       )}
     </section>
-  )
+  );
 }

@@ -1,0 +1,73 @@
+{
+  "name": "BlogPost",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Tytu\u0142 artyku\u0142u"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly slug"
+    },
+    "excerpt": {
+      "type": "string",
+      "description": "Kr\u00f3tki opis artyku\u0142u (do 160 znak\u00f3w dla SEO)"
+    },
+    "content": {
+      "type": "string",
+      "description": "Tre\u015b\u0107 artyku\u0142u w formacie Markdown"
+    },
+    "cover_image": {
+      "type": "string",
+      "description": "URL obrazu g\u0142\u00f3wnego"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "poradniki",
+        "realizacje",
+        "nowosci",
+        "technologie",
+        "branza"
+      ],
+      "description": "Kategoria artyku\u0142u"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tagi artyku\u0142u"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Imi\u0119 i nazwisko autora"
+    },
+    "published": {
+      "type": "boolean",
+      "default": false,
+      "description": "Czy artyku\u0142 jest opublikowany"
+    },
+    "publish_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data publikacji"
+    },
+    "read_time": {
+      "type": "number",
+      "description": "Szacowany czas czytania w minutach"
+    },
+    "views": {
+      "type": "number",
+      "default": 0,
+      "description": "Liczba wy\u015bwietle\u0144"
+    }
+  },
+  "required": [
+    "title",
+    "slug",
+    "content",
+    "category"
+  ]
+}

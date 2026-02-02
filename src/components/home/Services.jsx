@@ -91,4 +91,48 @@ export default function Services() {
                     alt={service.title}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
- 
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                    <h3 className="text-lg md:text-xl font-bold text-white">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-white/80 hidden md:block">
+                      {service.description}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className={`p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px] ${
+                  service.color ? 'text-white' : 'hover:bg-gray-50'
+                }`}>
+                  <service.icon 
+                    className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 ${
+                      service.color ? 'text-white/90' : 'text-[#d4a84b]'
+                    }`} 
+                  />
+                  <div className="mt-3 sm:mt-4">
+                    <h3 className={`text-xs sm:text-sm md:text-base font-bold leading-tight ${
+                      service.color ? 'text-white' : 'text-gray-900'
+                    }`}>
+                      {service.title}
+                    </h3>
+                    <p className={`mt-1 text-xs ${
+                      service.color ? 'text-white/80' : 'text-gray-600'
+                    } hidden md:block`}>
+                      {service.description}
+                    </p>
+                  </div>
+                </div>
+              )}
+              
+              {/* Golden border accent on hover */}
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#d4a84b] rounded-2xl transition-colors duration-300 pointer-events-none" />
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
