@@ -54,6 +54,7 @@ import Admin from './pages/Admin';
 import Shop from './pages/Shop';
 import ShopProduct from './pages/ShopProduct';
 import Checkout from './pages/Checkout';
+import AdminManager from '@/components/admin/AdminManager';
 
 
 export const PAGES = {
@@ -61,6 +62,7 @@ export const PAGES = {
     "BlogPost": BlogPost,
     "Home": Home,
     "Admin": Admin,
+    "AdminManager": AdminManager, // <--- Dodaj to tutaj
     "Shop": Shop,
     "ShopProduct": ShopProduct,
     "Checkout": Checkout,
@@ -70,3 +72,4 @@ export const pagesConfig = {
     mainPage: "Home",
     Pages: PAGES,
 };
+

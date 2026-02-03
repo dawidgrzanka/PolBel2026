@@ -76,7 +76,7 @@ export default function AdminSidebar({ currentTab }) {
           Wróć do strony
         </Link>
         <button
-          onClick={handleLogout}
+          onClick={() => base44.auth.logout()}
           className="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-red-400 transition-colors w-full"
         >
           <LogOut className="w-5 h-5" />
