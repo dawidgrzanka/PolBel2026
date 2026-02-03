@@ -1,20 +1,24 @@
-import { useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const CART_KEY = 'polbel_cart';
+const CartContext = createContext(null);
 
-export function useCart() {
+// 1. PROVIDER - owiń nim całą aplikację w App.jsx lub main.jsx
+export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
 
-  // Load cart from localStorage on mount
+  // Wczytywanie z localStorage
   useEffect(() => {
-    const saved = localStorage.getItem(CART_KEY);
-    if (saved) {
-      setCart(JSON.parse(saved));
+    try {
+      const saved = localStorage.getItem(CART_KEY);
+      if (saved) setCart(JSON.parse(saved));
+    } catch (e) {
+      console.error("Błąd ładowania koszyka:", e);
     }
   }, []);
 
-  // Save cart to localStorage on change
+  // Zapisywanie do localStorage
   useEffect(() => {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
   }, [cart]);
@@ -29,7 +33,16 @@ export function useCart() {
             : item
         );
       }
-      return [...prev, { ...product, quantity }];
+      // Upewniamy się, że zapisujemy tylko niezbędne dane (z obsługą main_image)
+      return [...prev, { 
+        id: product.id, 
+        name: product.name, 
+        price: Number(product.price), 
+        main_image: product.main_image || product.image,
+        price_unit: product.price_unit,
+        slug: product.slug,
+        quantity 
+      }];
     });
     setCartOpen(true);
   };
@@ -52,13 +65,12 @@ export function useCart() {
 
   const clearCart = () => {
     setCart([]);
-    localStorage.removeItem(CART_KEY);
   };
 
   const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  return {
+  const value = {
     cart,
     cartOpen,
     setCartOpen,
@@ -69,4 +81,15 @@ export function useCart() {
     cartTotal,
     cartCount
   };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+}
+
+// 2. HOOK - tego używasz w komponentach
+export function useCart() {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
 }

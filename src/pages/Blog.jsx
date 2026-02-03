@@ -17,15 +17,21 @@ export default function Blog() {
   const currentTag = urlParams.get('tag');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // 1. Pobieranie prawdziwych danych z Twojego backendu
-  const { data: allPosts = [], isLoading } = useQuery({
+  // 1. Pobieranie danych z backendu
+  const { data: apiResponse, isLoading, isError } = useQuery({
     queryKey: ['public-posts'],
     queryFn: () => base44.entities.BlogPost.list(),
   });
 
-  // 2. Filtrowanie i logika wyświetlania
+  // 2. BEZPIECZNE PRZYPISANIE: Upewniamy się, że allPosts to zawsze tablica
+  // Jeśli apiResponse nie jest tablicą (np. jest błędem 500), używamy pustej listy []
+  const allPosts = useMemo(() => {
+    return Array.isArray(apiResponse) ? apiResponse : [];
+  }, [apiResponse]);
+
+  // 3. Filtrowanie i logika wyświetlania
   const filteredPosts = useMemo(() => {
-    // Wyświetlamy tylko posty opublikowane
+    // Tutaj używamy już bezpiecznej zmiennej allPosts
     let result = allPosts.filter(p => p.published === true || p.published === 1);
     
     if (currentCategory) {
@@ -58,37 +64,35 @@ export default function Blog() {
     branza: 'Branża'
   };
 
+  // Jeśli jest błąd serwera, możemy wyświetlić komunikat zamiast białej strony
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <div className="pt-40 text-center">
+          <h2 className="text-2xl font-bold text-gray-800">Ups! Serwer ma przerwę technologiczną.</h2>
+          <p className="text-gray-600 mt-2">Upewnij się, że MySQL w XAMPP jest włączony.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
       <main className="pt-20">
-        {/* Hero Section */}
         <section className="bg-[#1a1a1a] py-16 md:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav className="flex items-center gap-2 text-sm text-white/60 mb-6" aria-label="Breadcrumb">
+            <nav className="flex items-center gap-2 text-sm text-white/60 mb-6">
               <Link to={createPageUrl('Home')} className="hover:text-white flex items-center gap-1">
-                <Home className="w-4 h-4" />
-                Strona główna
+                <Home className="w-4 h-4" /> Start
               </Link>
               <ChevronRight className="w-4 h-4" />
               <span className="text-white">Blog</span>
-              {currentCategory && (
-                <>
-                  <ChevronRight className="w-4 h-4" />
-                  <span className="text-[#d4a84b]">{categoryLabels[currentCategory]}</span>
-                </>
-              )}
             </nav>
-            
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
               Blog <span className="text-[#e6007e]">POLBEL</span>
             </h1>
-            <p className="text-white/70 max-w-2xl mb-8">
-              Poradniki, realizacje i aktualności ze świata budownictwa. 
-              Dzielimy się wiedzą i doświadczeniem.
-            </p>
-            
             <div className="relative max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <Input
@@ -96,13 +100,12 @@ export default function Blog() {
                 placeholder="Szukaj artykułów..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:bg-white focus:text-gray-900 focus:placeholder:text-gray-400"
+                className="pl-10 h-12 bg-white/10 border-white/20 text-white"
               />
             </div>
           </div>
         </section>
 
-        {/* Blog Content Section */}
         <section className="py-12 md:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
@@ -110,43 +113,21 @@ export default function Blog() {
                 {isLoading ? (
                   <div className="space-y-6">
                     <Skeleton className="h-80 rounded-2xl" />
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      {[...Array(4)].map((_, i) => (
-                        <Skeleton key={i} className="h-72 rounded-xl" />
-                      ))}
-                    </div>
                   </div>
                 ) : filteredPosts.length === 0 ? (
                   <div className="text-center py-16 bg-white rounded-xl">
-                    <p className="text-gray-500 text-lg">Nie znaleziono artykułów</p>
-                    <Link 
-                      to={createPageUrl('Blog')} 
-                      className="text-[#e6007e] hover:underline mt-2 inline-block"
-                    >
-                      Zobacz wszystkie artykuły
-                    </Link>
+                    <p className="text-gray-500 text-lg">Brak artykułów do wyświetlenia.</p>
                   </div>
                 ) : (
                   <>
-                    {featuredPost && (
-                      <div className="mb-8">
-                        {/* Przekazujemy prawdziwy post z Twojej bazy */}
-                        <BlogCard post={featuredPost} featured />
-                      </div>
-                    )}
-                    {regularPosts.length > 0 && (
-                      <div className="grid sm:grid-cols-2 gap-6">
-                        {regularPosts.map(post => (
-                          <BlogCard key={post.id} post={post} />
-                        ))}
-                      </div>
-                    )}
+                    {featuredPost && <div className="mb-8"><BlogCard post={featuredPost} featured /></div>}
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      {regularPosts.map(post => <BlogCard key={post.id} post={post} />)}
+                    </div>
                   </>
                 )}
               </div>
-
               <div className="lg:col-span-1">
-                {/* Przekazujemy wszystkie posty do sidebaru dla list popularnych/kategorii */}
                 <BlogSidebar 
                   posts={allPosts} 
                   currentCategory={currentCategory}
@@ -157,7 +138,6 @@ export default function Blog() {
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );
