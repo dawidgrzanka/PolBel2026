@@ -11,6 +11,7 @@ import OrdersManager from '@/components/admin/OrdersManager';
 import CommentsManager from '@/components/admin/CommentsManager';
 import ContentManager from '@/components/admin/ContentManager';
 import SettingsManager from '@/components/admin/SettingsManager';
+import AdminManager from '@/components/admin/AdminManager';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Menu, X } from 'lucide-react';
 
@@ -25,39 +26,23 @@ export default function Admin() {
   const action = urlParams.get('action');
 
   useEffect(() => {
-    // Całkowicie pomijamy sprawdzanie w API base44
     const checkAuth = async () => {
       console.log("Symulacja autoryzacji admina...");
-      
-      // Ustawiamy użytkownika ręcznie bez pytania API
       setUser({ 
         id: '1', 
         name: 'Admin PolBel', 
         role: 'admin' 
       });
-      
-      // Kluczowe: wyłączamy ekran ładowania
       setLoading(false);
     };
     
     checkAuth();
   }, [navigate]);
 
+  // Zapytania do bazy danych
   const { data: posts = [], isLoading: postsLoading } = useQuery({
     queryKey: ['admin-posts'],
     queryFn: () => base44.entities.BlogPost.list('-created_date'),
-    enabled: !loading
-  });
-
-  const { data: comments = [], isLoading: commentsLoading } = useQuery({
-    queryKey: ['admin-comments'],
-    queryFn: () => base44.entities.BlogComment.list('-created_date'),
-    enabled: !loading
-  });
-
-  const { data: siteContent = [], isLoading: contentLoading } = useQuery({
-    queryKey: ['admin-content'],
-    queryFn: () => base44.entities.SiteContent.list(),
     enabled: !loading
   });
 
@@ -73,19 +58,21 @@ export default function Admin() {
     enabled: !loading
   });
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#e6007e] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Ładowanie panelu...</p>
-        </div>
-      </div>
-    );
-  }
+  const { data: siteContent = [], isLoading: contentLoading } = useQuery({
+    queryKey: ['admin-content'],
+    queryFn: () => base44.entities.SiteContent.list(),
+    enabled: !loading
+  });
+
+  // Dodaj opcjonalne zapytanie dla komentarzy, jeśli Twoje API to wspiera
+  const { data: comments = [], isLoading: commentsLoading } = useQuery({
+    queryKey: ['admin-comments'],
+    queryFn: () => base44.entities.BlogPost.list(), // lub dedykowany endpoint
+    enabled: !loading
+  });
 
   const renderContent = () => {
-    if (postsLoading || commentsLoading || contentLoading || productsLoading || ordersLoading) {
+    if (postsLoading || productsLoading || ordersLoading || contentLoading) {
       return (
         <div className="space-y-4">
           <Skeleton className="h-8 w-48" />
@@ -108,10 +95,23 @@ export default function Admin() {
         return <ContentManager siteContent={siteContent} />;
       case 'settings':
         return <SettingsManager />;
+      case 'users':
+        return <AdminManager />;
       default:
         return <AdminDashboard posts={posts} comments={comments} orders={orders} products={products} />;
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-[#e6007e] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Ładowanie panelu...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
@@ -135,7 +135,7 @@ export default function Admin() {
       <div className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-transform duration-300 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       }`}>
-        <AdminSidebar currentTab={currentTab} />
+        <AdminSidebar currentTab={currentTab} user={user} />
       </div>
 
       {/* Main Content */}
