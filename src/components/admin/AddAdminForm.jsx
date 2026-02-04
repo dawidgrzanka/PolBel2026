@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from 'sonner';
@@ -12,7 +12,7 @@ export default function AddAdminForm() {
     e.preventDefault();
     setLoading(true);
     try {
-      await base44.auth.registerAdmin(formData);
+      await polbelApi.auth.registerAdmin(formData);
       toast.success('Dodano nowego administratora!');
       setFormData({ name: '', email: '', password: '' }); // Reset pola
     } catch (err) {

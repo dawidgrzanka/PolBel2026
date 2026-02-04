@@ -13,7 +13,7 @@ import { Calendar, Clock, User, ChevronRight, Home, Tag } from 'lucide-react';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 
 const categoryLabels = {
   poradniki: 'Poradniki',
@@ -33,7 +33,7 @@ const BlogPostPage = () => {
   // 2. Pobieramy wszystkie posty z bazy
   const { data: allPosts = [], isLoading } = useQuery({
     queryKey: ['public-posts'],
-    queryFn: () => base44.entities.BlogPost.list(),
+    queryFn: () => polbelApi.entities.BlogPost.list(),
   });
 
   // 3. Znajdujemy ten konkretny post na podstawie sluga

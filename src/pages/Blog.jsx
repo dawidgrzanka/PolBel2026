@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronRight, Home, Search } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 
 export default function Blog() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -20,7 +20,7 @@ export default function Blog() {
   // 1. Pobieranie danych z backendu
   const { data: apiResponse, isLoading, isError } = useQuery({
     queryKey: ['public-posts'],
-    queryFn: () => base44.entities.BlogPost.list(),
+    queryFn: () => polbelApi.entities.BlogPost.list(),
   });
 
   // 2. BEZPIECZNE PRZYPISANIE: Upewniamy się, że allPosts to zawsze tablica

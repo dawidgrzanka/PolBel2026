@@ -3,14 +3,14 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   const stats = [
-    { value: '15+', label: 'LAT DOŚWIADCZENIA' },
+    { value: '5+', label: 'LAT DOŚWIADCZENIA' },
     { value: '40+', suffix: 'KM', label: 'OBSZAR DZIAŁANIA' },
     { value: '100%', label: 'WŁASNY SPRZĘT' },
   ];
 
   return (
     <section 
-      className="relative min-h-screen flex flex-col"
+      className="relative min-h-screen flex flex-col"w
       aria-labelledby="hero-heading"
     >
       {/* Background Image */}
@@ -52,8 +52,8 @@ export default function Hero() {
               id="hero-heading"
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
             >
-              BUDUJEMY<br />
-              <span className="text-white">SOLIDNOŚĆ.</span>
+              Jesteśmy<br />
+              <span className="text-white">Partnerem w Twojej realizacji.</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-white/80 max-w-xl">
               Kompleksowe Realizacje Ziemne, Brukarskie i Instalacyjne
@@ -63,7 +63,7 @@ export default function Hero() {
                 href="#kontakt"
                 className="inline-flex items-center justify-center bg-[#e6007e] hover:bg-[#c70069] text-white font-semibold px-6 sm:px-8 py-3.5 sm:py-4 rounded transition-all duration-300 hover:shadow-lg hover:shadow-[#e6007e]/30 text-sm tracking-wide active:scale-[0.98] touch-manipulation"
               >
-                UMÓW KONSULTACJĘ
+                POROZMAWIAJ Z NAMI
               </a>
               <a
                 href="#wynajem"

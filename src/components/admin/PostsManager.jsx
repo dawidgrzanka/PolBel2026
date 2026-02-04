@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -57,7 +57,7 @@ export default function PostsManager({ posts, initialAction }) {
   const queryClient = useQueryClient();
 
   const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.BlogPost.create(data),
+    mutationFn: (data) => polbelApi.entities.BlogPost.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-posts'] });
       toast.success('Artykuł został utworzony');
@@ -67,7 +67,7 @@ export default function PostsManager({ posts, initialAction }) {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.BlogPost.update(id, data),
+    mutationFn: ({ id, data }) => polbelApi.entities.BlogPost.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-posts'] });
       toast.success('Artykuł został zaktualizowany');
@@ -77,7 +77,7 @@ export default function PostsManager({ posts, initialAction }) {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.BlogPost.delete(id),
+    mutationFn: (id) => polbelApi.entities.BlogPost.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-posts'] });
       toast.success('Artykuł został usunięty');

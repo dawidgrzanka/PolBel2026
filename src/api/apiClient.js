@@ -49,7 +49,7 @@ const api = {
     }),
 };
 
-export const base44 = {
+export const polbelApi = {
   auth: {
     login: async (email, password) => {
       const response = await fetch(`${API_URL}/auth/login`, {

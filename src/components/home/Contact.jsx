@@ -42,7 +42,7 @@ export default function Contact() {
             Skontaktuj się z <span className="text-[#e6007e]">nami</span>
           </h2>
           <p className="mt-4 text-gray-600">
-            Umów bezpłatną konsultację i otrzymaj wycenę projektu
+            Umów się z nami i otrzymaj wycenę projektu
           </p>
         </motion.div>
 
@@ -156,8 +156,11 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-white/60 text-sm">Telefon</p>
-                    <a href="tel:+48123456789" className="text-white font-medium hover:text-[#d4a84b] transition-colors">
-                      +48 123 456 789
+                    <a href="tel:+48882193371" className="text-white font-medium hover:text-[#d4a84b] transition-colors">
+                      +48 882 193 371 |
+                    </a> 
+                    <a href="tel:+48692376235" className="text-white font-medium hover:text-[#d4a84b] transition-colors">
+                      +48 692 376 235
                     </a>
                   </div>
                 </div>
@@ -168,8 +171,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-white/60 text-sm">Email</p>
-                    <a href="mailto:kontakt@polbel.pl" className="text-white font-medium hover:text-[#d4a84b] transition-colors">
-                      kontakt@polbel.pl
+                    <a href="mailto:biuro@polbel.pl" className="text-white font-medium hover:text-[#d4a84b] transition-colors">
+                      biuro@polbel.pl
                     </a>
                   </div>
                 </div>
@@ -181,8 +184,8 @@ export default function Contact() {
                   <div>
                     <p className="text-white/60 text-sm">Adres</p>
                     <p className="text-white font-medium">
-                      ul. Budowlana 15<br />
-                      37-500 Jarosław, Polska
+                      ul. Wąska 13<br />
+                      57-250 Złoty Stok, Polska
                     </p>
                   </div>
                 </div>

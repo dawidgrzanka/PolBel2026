@@ -9,7 +9,7 @@ export default function NavigationTracker() {
   const { Pages, mainPage } = pagesConfig;
   const mainPageKey = mainPage ?? Object.keys(Pages)[0];
 
-  // Usunięto Base44 tracking - statyczna strona
+  // Usunięto polbelApi tracking - statyczna strona
   useEffect(() => {
     // Opcjonalnie: Google Analytics tutaj
     console.log('Page viewed:', location.pathname);

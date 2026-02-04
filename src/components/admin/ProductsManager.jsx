@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -70,20 +70,20 @@ export default function ProductsManager({ products = [] }) {
   };
 
   const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.Product.create(data),
+    mutationFn: (data) => polbelApi.entities.Product.create(data),
     ...mutationOptions
   });
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, data }) => {
-      const response = await base44.entities.Product.update(id, data);
+      const response = await polbelApi.entities.Product.update(id, data);
       return response;
     },
     ...mutationOptions
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.Product.delete(id),
+    mutationFn: (id) => polbelApi.entities.Product.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });
       toast.success('Produkt usunięty');

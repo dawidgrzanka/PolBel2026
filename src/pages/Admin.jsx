@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -42,32 +42,32 @@ export default function Admin() {
   // Zapytania do bazy danych
   const { data: posts = [], isLoading: postsLoading } = useQuery({
     queryKey: ['admin-posts'],
-    queryFn: () => base44.entities.BlogPost.list('-created_date'),
+    queryFn: () => polbelApi.entities.BlogPost.list('-created_date'),
     enabled: !loading
   });
 
   const { data: products = [], isLoading: productsLoading } = useQuery({
     queryKey: ['admin-products'],
-    queryFn: () => base44.entities.Product.list('-created_date'),
+    queryFn: () => polbelApi.entities.Product.list('-created_date'),
     enabled: !loading
   });
 
   const { data: orders = [], isLoading: ordersLoading } = useQuery({
     queryKey: ['admin-orders'],
-    queryFn: () => base44.entities.Order.list('-created_date'),
+    queryFn: () => polbelApi.entities.Order.list('-created_date'),
     enabled: !loading
   });
 
   const { data: siteContent = [], isLoading: contentLoading } = useQuery({
     queryKey: ['admin-content'],
-    queryFn: () => base44.entities.SiteContent.list(),
+    queryFn: () => polbelApi.entities.SiteContent.list(),
     enabled: !loading
   });
 
   // Dodaj opcjonalne zapytanie dla komentarzy, jeśli Twoje API to wspiera
   const { data: comments = [], isLoading: commentsLoading } = useQuery({
     queryKey: ['admin-comments'],
-    queryFn: () => base44.entities.BlogPost.list(), // lub dedykowany endpoint
+    queryFn: () => polbelApi.entities.BlogPost.list(), // lub dedykowany endpoint
     enabled: !loading
   });
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -14,7 +14,7 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await base44.auth.login(email, password);
+      await polbelApi.auth.login(email, password);
       toast.success('Zalogowano pomyślnie!');
       window.location.href = '/admin'; // Przekierowanie do panelu
     } catch (err) {

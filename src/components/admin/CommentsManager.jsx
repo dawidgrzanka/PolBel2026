@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -25,7 +25,7 @@ export default function CommentsManager({ comments, posts }) {
   const queryClient = useQueryClient();
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.BlogComment.update(id, data),
+    mutationFn: ({ id, data }) => polbelApi.entities.BlogComment.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-comments'] });
       toast.success('Komentarz został zaktualizowany');
@@ -33,7 +33,7 @@ export default function CommentsManager({ comments, posts }) {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.BlogComment.delete(id),
+    mutationFn: (id) => polbelApi.entities.BlogComment.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-comments'] });
       toast.success('Komentarz został usunięty');

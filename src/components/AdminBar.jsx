@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { LayoutDashboard, LogOut, User } from 'lucide-react';
 
 export default function AdminBar() {
   // Sprawdzamy, czy admin jest zalogowany (token w localStorage)
-  const isAuthenticated = base44.auth.isAuthenticated();
+  const isAuthenticated = polbelApi.auth.isAuthenticated();
   
   if (!isAuthenticated) return null;
 
   const handleLogout = () => {
-    base44.auth.logout();
+    polbelApi.auth.logout();
     window.location.reload(); // Odświeżamy stronę główną po wylogowaniu
   };
 

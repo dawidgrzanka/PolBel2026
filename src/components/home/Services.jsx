@@ -13,7 +13,7 @@ export default function Services() {
     },
     {
       title: 'Własny Park Maszyn',
-      description: 'Nowoczesny sprzęt budowlany do każdego zadania',
+      description: 'Nowoczesny sprzęt potrzebny do realizacji każdego projektu',
       icon: Truck,
       featured: false,
     },
@@ -30,8 +30,8 @@ export default function Services() {
       featured: false,
     },
     {
-      title: 'Licencje i Uprawnienia',
-      description: 'Certyfikowani specjaliści z pełnymi uprawnieniami',
+      title: 'Instalacje WOD-KAN',
+      description: 'Kompleksowe instalacje wodno-kanalizacyjne oparte na nowoczesnych technologiach oraz zgrzewach elektrooporowych',
       icon: Users,
       image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=400&fit=crop&auto=format&q=75',
       featured: true,
@@ -44,8 +44,8 @@ export default function Services() {
       featured: false,
     },
     {
-      title: 'Instalacje WOD-KAN',
-      description: 'Kompleksowe instalacje wodno-kanalizacyjne',
+      title: 'Remonty',
+      description: 'Kompleksowe remonty budynków i przestrzeni zewnętrznych',
       icon: Droplets,
       featured: false,
     },

@@ -5,21 +5,21 @@ import { MapPin, Phone, Clock, ChevronRight } from 'lucide-react';
 export default function Equipment() {
   const equipment = [
     {
-      name: 'Koparki Gąsienicowe',
-      weight: '2t-14t RCF',
+      name: 'Minikoparki',
+      weight: 'Klasa: 2t',
       features: ['Pełne wyposażenie', 'Certyfikat sprawności', 'Ubezpieczenie OC'],
       available: true,
     },
     {
-      name: 'Koparko-Ładowarki',
-      weight: 'Różne modele',
-      features: ['Łyżki wymienne', 'Widły paletowe', 'Młoty hydrauliczne'],
+      name: 'Zagęszczarki',
+      weight: '126 kg - 437 kg',
+      features: ['Zagęszczarka rewersyjna/jednokierunkowa', 'Czujnik zagęszczenia gruntu', 'Siła odśrodkowa 20kN - 52kN'],
       available: true,
     },
     {
-      name: 'Walce i Zagęszczarki',
-      weight: 'Kompaktowe i ciężkie',
-      features: ['Wibracyjne', 'Statyczne', 'Płyty wibracyjne'],
+      name: 'Sprzęt budowlany i zabezpieczenia',
+      weight: 'Różne klasy',
+      features: ['Przecinarka spalinowa', 'Wiertnica do betonu', 'Barierki drogowe '],
       available: true,
     },
   ];
@@ -111,21 +111,21 @@ export default function Equipment() {
                 <MapPin className="w-5 h-5 text-[#d4a84b] mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-white font-medium">Siedziba główna</p>
-                  <p className="text-white/60 text-sm">Polska, woj. podkarpackie</p>
+                  <p className="text-white/60 text-sm">Złoty Stok, woj. dolnośląskie</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <Clock className="w-5 h-5 text-[#d4a84b] mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-white font-medium">Godziny pracy</p>
-                  <p className="text-white/60 text-sm">Pon-Pt: 7:00 - 17:00</p>
+                  <p className="text-white/60 text-sm">Pon-Pt: 8:00 - 17:00</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <Phone className="w-5 h-5 text-[#d4a84b] mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-white font-medium">Kontakt telefoniczny</p>
-                  <p className="text-white/60 text-sm">Dostępny całą dobę</p>
+                  <p className="text-white/60 text-sm">Pon-Pt: 8:00 - 17:00</p>
                 </div>
               </div>
             </div>

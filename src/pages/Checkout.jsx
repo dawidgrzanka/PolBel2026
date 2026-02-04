@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -46,7 +46,7 @@ export default function Checkout() {
   }, [orderComplete]);
 
   const createOrderMutation = useMutation({
-    mutationFn: (data) => base44.entities.Order.create(data),
+    mutationFn: (data) => polbelApi.entities.Order.create(data),
     onSuccess: (response) => {
       // response to obiekt zwrócony przez serwer po INSERT
       setOrderNumber(response?.order_number || 'W TRAKCIE');

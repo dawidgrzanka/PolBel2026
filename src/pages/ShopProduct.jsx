@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -43,14 +43,14 @@ export default function ShopProduct() {
   // 1. Pobieranie głównego produktu
   const { data: product, isLoading, isError } = useQuery({
     queryKey: ['shop-product', slug],
-    queryFn: () => base44.entities.Product.get(slug), // Zmieniono z .filter na .get
+    queryFn: () => polbelApi.entities.Product.get(slug), // Zmieniono z .filter na .get
     enabled: !!slug
   });
 
   // 2. Pobieranie powiązanych produktów (z tej samej kategorii)
   const { data: relatedData = [] } = useQuery({
     queryKey: ['related-products', product?.category],
-    queryFn: () => base44.entities.Product.filter({ category: product.category, in_stock: true }),
+    queryFn: () => polbelApi.entities.Product.filter({ category: product.category, in_stock: true }),
     enabled: !!product
   });
 

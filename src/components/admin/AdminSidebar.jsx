@@ -13,7 +13,7 @@ import {
   ShoppingCart,
   Users 
 } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 
 const menuItems = [
   { name: 'Dashboard', icon: LayoutDashboard, page: 'Admin' },
@@ -28,7 +28,7 @@ const menuItems = [
 
 export default function AdminSidebar({ currentTab, user }) {
   const handleLogout = () => {
-    base44.auth.logout();
+    polbelApi.auth.logout();
   };
 
   // Funkcja generująca inicjały z nazwy użytkownika

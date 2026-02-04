@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,11 +45,11 @@ export default function ContentManager({ siteContent }) {
   }, [siteContent]);
 
   const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.SiteContent.create(data),
+    mutationFn: (data) => polbelApi.entities.SiteContent.create(data),
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.SiteContent.update(id, data),
+    mutationFn: ({ id, data }) => polbelApi.entities.SiteContent.update(id, data),
   });
 
   const handleChange = (key, value) => {

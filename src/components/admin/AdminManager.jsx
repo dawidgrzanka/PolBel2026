@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from 'sonner';
@@ -15,7 +15,7 @@ export default function AdminManager() {
   const fetchAdmins = async () => {
     try {
       setLoading(true);
-      const data = await base44.auth.listAdmins();
+      const data = await polbelApi.auth.listAdmins();
       setAdmins(data);
     } catch (err) {
       console.error(err);
@@ -38,7 +38,7 @@ export default function AdminManager() {
 
     try {
       setIsSubmitting(true);
-      await base44.auth.registerAdmin(newAdmin);
+      await polbelApi.auth.registerAdmin(newAdmin);
       toast.success('Nowy administrator został dodany');
       setNewAdmin({ name: '', email: '', password: '' });
       await fetchAdmins(); // Odświeżenie listy z serwera
@@ -57,7 +57,7 @@ export default function AdminManager() {
     if (!window.confirm(`Czy na pewno chcesz usunąć administratora ${email}?`)) return;
 
     try {
-      await base44.auth.deleteAdmin(id);
+      await polbelApi.auth.deleteAdmin(id);
       toast.success('Administrator został usunięty');
       // Optymistyczna aktualizacja UI
       setAdmins(prev => prev.filter(admin => admin.id !== id));

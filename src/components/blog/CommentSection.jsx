@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +18,7 @@ export default function CommentSection({ postId, comments = [] }) {
   const queryClient = useQueryClient();
 
   const createCommentMutation = useMutation({
-    mutationFn: (data) => base44.entities.BlogComment.create(data),
+    mutationFn: (data) => polbelApi.entities.BlogComment.create(data),
     onSuccess: () => {
       setSubmitted(true);
       setFormData({ author_name: '', author_email: '', content: '' });

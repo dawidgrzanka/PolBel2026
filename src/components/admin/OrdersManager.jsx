@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -36,11 +36,11 @@ export default function OrdersManager({ orders = [] }) {
   const [deleteOrderId, setDeleteOrderId] = useState(null);
   const queryClient = useQueryClient();
 
-  // FIX: Poprawiono base44Client na base44
+  // FIX: Poprawiono polbelApiClient na polbelApi
   const updateMutation = useMutation({
   // Rozbijamy obiekt na id i resztę danych (status), 
   // a potem przekazujemy je jako OSOBNE argumenty
-  mutationFn: ({ id, ...data }) => base44.entities.Order.update(id, data), 
+  mutationFn: ({ id, ...data }) => polbelApi.entities.Order.update(id, data), 
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ['admin-orders'] });
     toast.success('Status zaktualizowany!');
@@ -52,7 +52,7 @@ export default function OrdersManager({ orders = [] }) {
 });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.Order.delete(id),
+    mutationFn: (id) => polbelApi.entities.Order.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-orders'] });
       toast.success('Usunięto zamówienie');

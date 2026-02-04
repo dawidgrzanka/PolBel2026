@@ -9,7 +9,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import { CartProvider } from '@/components/shop/useCart';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import AdminBar from '@/components/AdminBar';
 
 // IMPORT TWOJEJ STRONY LOGOWANIA
@@ -23,7 +23,7 @@ const MainPage = mainPageKey ? Pages[mainPageKey] : <></>;
  * Komponent ochronny - sprawdza czy w localStorage jest token
  */
 const AdminGuard = ({ children }) => {
-  const isAuthenticated = base44.auth.isAuthenticated();
+  const isAuthenticated = polbelApi.auth.isAuthenticated();
   
   if (!isAuthenticated) {
     // Jeśli brak autoryzacji, przekieruj do /login

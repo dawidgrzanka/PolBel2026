@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { base44 } from '@/api/base44Client';
+import { polbelApi} from '@/api/apiClient';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -32,7 +32,7 @@ export default function Shop() {
   // 1. Pobieranie danych z Twojej bazy (Product)
   const { data: apiResponse, isLoading, isError } = useQuery({
     queryKey: ['shop-products'],
-    queryFn: () => base44.entities.Product.list()
+    queryFn: () => polbelApi.entities.Product.list()
   });
 
   // 2. Bezpieczne przygotowanie listy produktów (zabezpieczenie przed błędem 500)

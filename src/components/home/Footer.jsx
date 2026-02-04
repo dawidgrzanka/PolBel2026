@@ -31,8 +31,8 @@ export default function Footer() {
               className="h-10 w-auto mb-4"
             />
             <p className="text-white/60 text-sm max-w-md">
-              Budujemy solidność od ponad 15 lat. Kompleksowe usługi budowlane, 
-              brukarskie i instalacyjne na terenie całego Podkarpacia.
+              Budujemy solidność od ponad 5 lat. Kompleksowe usługi budowlane, 
+              brukarskie i instalacyjne na terenie Dolnegośląska i Opolszczyzny.
             </p>
           </div>
 
