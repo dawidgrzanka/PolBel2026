@@ -1,19 +1,18 @@
-import polbelApi from "@polbelApi/vite-plugin"
-import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
 
-// https://vite.dev/config/
+// Standardowa konfiguracja Vite dla React
 export default defineConfig({
-  logLevel: 'error', // Suppress warnings, only show errors
-  plugins: [
-    polbelApi({
-      // Support for legacy code that imports the polbelApi SDK with @/integrations, @/entities, etc.
-      // can be removed if the code has been updated to use the new SDK imports from @polbelApi/sdk
-      legacySDKImports: process.env.polbelApi_LEGACY_SDK_IMPORTS === 'true',
-      hmrNotifier: true,
-      navigationNotifier: true,
-      visualEditAgent: true
-    }),
-    react(),
-  ]
-});
+  plugins: [react()],
+  resolve: {
+    alias: {
+      // To pozwala na używanie skrótu "@" w importach, np. "@/components/Hero"
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  server: {
+    // Opcjonalnie: możesz tu ustawić port, jeśli chcesz (np. 3000)
+    port: 5173,
+  }
+})
